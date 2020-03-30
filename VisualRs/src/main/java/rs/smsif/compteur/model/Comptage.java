@@ -65,4 +65,10 @@ public class Comptage {
 	public int getIndic() {
 		return indic;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return version + " " + rubriqueSolde;
+	}
 }
