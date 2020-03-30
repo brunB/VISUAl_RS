@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1142.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ComboBox fx:id="selectionRS" layoutX="34.0" layoutY="67.0" prefHeight="39.0" prefWidth="178.0" />
+            <Text layoutX="34.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Rubrique de Solde" />
+            <Text layoutX="234.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Version" />
+            <ComboBox fx:id="selectionVersion" layoutX="234.0" layoutY="67.0" prefHeight="39.0" prefWidth="178.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
