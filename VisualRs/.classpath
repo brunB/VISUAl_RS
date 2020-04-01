@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-<<<<<<< HEAD
-	<classpathentry kind="lib" path="C:/Users/gmarco/Downloads/gs-core-1.3/gs-core-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/Users/gmarco/Downloads/gs-ui-1.3/gs-ui-1.3.jar"/>
-=======
->>>>>>> e49c53dbb6bf79d92a82ee40abdd8b7ebfc0d89a
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="src/main/resources/gs-core-1.3.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/gs-ui-1.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
