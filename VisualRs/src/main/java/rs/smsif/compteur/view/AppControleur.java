@@ -5,10 +5,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.ui.swingViewer.ViewPanel;
 import org.graphstream.ui.view.View;
 import org.graphstream.ui.view.Viewer;
 
@@ -19,6 +22,7 @@ import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import rs.smsif.compteur.model.Comptage;
 import rs.smsif.compteur.model.Main;
 
@@ -111,6 +115,28 @@ public class AppControleur {
 			}
 		}
 		
+		/*SwingNode swingNode = new SwingNode();
+		
+		BorderPane root = (BorderPane) selectionRS.getScene().getRoot();
+		
+		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
+        ViewPanel viewPanel = viewer.addDefaultView(false);
+        
+        createAndSetSwingContent(swingNode, viewPanel);
+        
+        /*JPanel panel = new JPanel();
+        panel.add(viewPanel);
+        swingNode.setContent(panel);
+        
+        StackPane stack = new StackPane();
+        
+        stack.setLayoutX(100);
+        stack.setLayoutY(100);
+        stack.getChildren().add(swingNode);
+       
+        root.getChildren().add(swingNode);
+		//root.getChildren().add(/*new Bulle(100, 100, comptageRS));//stack);*/
+        		
 		graph.display();
 	}
 	
@@ -160,4 +186,15 @@ public class AppControleur {
 		
 		return comptagesSelonVersion;
 	}
+	
+	private void createAndSetSwingContent(final SwingNode swingNode, final ViewPanel viewPanel) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                JPanel panel = new JPanel();
+                panel.add(viewPanel);
+                swingNode.setContent(panel);
+            }
+        });
+    }
 }
