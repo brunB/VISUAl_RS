@@ -7,7 +7,7 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.smsif.compteur.view.AppControleur">
    <center>
-      <AnchorPane prefHeight="558.0" prefWidth="851.0" BorderPane.alignment="CENTER">
+      <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <ComboBox fx:id="selectionRS" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Rubrique de Solde" />
             <ComboBox fx:id="selectionVersion" layoutX="282.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Version" />

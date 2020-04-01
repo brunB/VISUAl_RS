@@ -1,0 +1,20 @@
+node {
+	size: 50px, 50px;
+	fill-color: blue;
+	text-mode: normal;
+	text-size: 20px;
+}
+
+node.evo {
+	size: 50px, 50px;
+	fill-color: red;
+	text-mode: normal;
+	text-size: 20px;
+}
+
+node.bar {
+	size: 50px, 50px;
+	fill-color: green;
+	text-mode: normal;
+	text-size: 20px;
+}
