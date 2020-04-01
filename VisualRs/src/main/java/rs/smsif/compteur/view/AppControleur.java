@@ -26,14 +26,14 @@ public class AppControleur {
 
 	@FXML
 	private ComboBox <String> selectionRS;
-	
+
 	@FXML
 	private ComboBox <String> selectionVersion;
 	
 	private Comptage comptageRS;
 	
 	private ObservableList <Comptage> comptages;
-	
+
 	/**
 	 * Constructeur.
 	 */
@@ -41,42 +41,39 @@ public class AppControleur {
 	{
 		comptages = FXCollections.observableArrayList();
 		
-		comptages.add(new Comptage("v1", "m1", "rs1", 0, 0, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs2", 0, 0, 1, 1));
-		comptages.add(new Comptage("v1", "m1", "rs3", 0, 0, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs4", 0, 1, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs5", 0, 1, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs6", 0, 0, 1, 1));
-		comptages.add(new Comptage("v1", "m1", "rs7", 0, 1, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs8", 0, 0, 0, 1));
-		comptages.add(new Comptage("v1", "m1", "rs9", 0, 0, 0, 1));
-		comptages.add(new Comptage("v2", "m1", "rs2", 0, 0, 0, 1));
-		comptages.add(new Comptage("v2", "m1", "rs3", 0, 0, 0, 1));
-		comptages.add(new Comptage("v3", "m1", "rs3", 0, 0, 0, 1));
-		comptages.add(new Comptage("v4", "m1", "rs1", 0, 0, 0, 1));
+		comptages.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		comptages.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		comptages.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
+		comptages.add(new Comptage("07.14.01.a.r01","TAOPC","TAOPCO",13,3,3,1));
+		comptages.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
+		comptages.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
+		comptages.add(new Comptage("07.20.01.a.r02","FORM","FORMAT",30,2,10,1));
+		comptages.add(new Comptage("07.20.01.a.r02","FORM","RECRUT",37,2,11,1));
 	}
-	
+
 	@FXML
 	private void initialize()
-	{		
-		ObservableList <String> rubriquesSolde = FXCollections.observableArrayList("rs1");
+	{
+		/* LISTE DES RS FIGEES OBTENUE A PARTIR D'UNE TABLE */
+		ObservableList <String> rubriquesSolde = FXCollections.observableArrayList("TAOPCO");
 		selectionRS.setItems(rubriquesSolde);
-		
-		ObservableList <String> version = FXCollections.observableArrayList("v1", "v2", "v3", "v4");
+
+		/* LISTE DES VERSIONS FIGEES OBTENUE A PARTIR D'UNE TABLE */
+		ObservableList <String> version = FXCollections.observableArrayList("07.14.01.a.r01","07.15.00.d.r01", "07.19.00.c.r01","07.19.00.d.r01", "07.20.01.a.r01");
 		selectionVersion.setItems(version);
-		
+
 		// Chargement du graphique si le numéro de version est renseigné.
 		selectionRS.valueProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
-				
+
 			if (!selectionVersion.getSelectionModel().isEmpty())
 			{
 				construireGraphique();
 			}
 		});
-		
+
 		// Chargement du graphique si la rubrique de solde est renseignée.
 		selectionVersion.valueProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
-			
+
 			if (!selectionRS.getSelectionModel().isEmpty())
 			{
 				construireGraphique();
@@ -135,28 +132,29 @@ public class AppControleur {
 		for (int i = indiceVersion; i >= 0; i--)
 		{
 			String version = selectionVersion.getItems().get(i);
-			
+
 			Optional <Comptage> comptage = comptages.stream()
 			  										.filter(item -> item.getVersion().equals(version))
 			  										.filter(item -> item.getRubriqueSolde().equals(rubriqueSolde))
 			  										.findFirst();
-			
+
 			if (comptage.isPresent())
-			{	
+			{
 				comptageRS = comptage.get();
-				
+
 				break;
 			}
 		}
-		
+
 		String comptageRSVersion = comptageRS.getVersion();
-		
+
 		// Récupération des rubriques de soldes associées à celle choisie.
 		// Celle choisie doit être exclue.
 		List <Comptage> comptagesSelonVersion = comptages.stream()
 	   		        									 .filter(item -> item.getVersion().equals(comptageRSVersion))
 	   		        									 .filter(item -> !item.getRubriqueSolde().equals(rubriqueSolde))
 	   		        									 .collect(Collectors.toList());
+		
 		
 		comptagesSelonVersion.add(0, comptageRS);
 		
