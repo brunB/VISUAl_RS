@@ -4,27 +4,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import javax.swing.JComponent;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
-import org.graphstream.graph.Graph;
-import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.SingleGraph;
-import org.graphstream.ui.swingViewer.ViewPanel;
-import org.graphstream.ui.view.View;
-import org.graphstream.ui.view.Viewer;
-
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.StackPane;
+
 import rs.smsif.compteur.model.Comptage;
-import rs.smsif.compteur.model.Main;
+import rs.smsif.compteur.model.Graphe;
 
 public class AppControleur {
 
@@ -33,7 +19,7 @@ public class AppControleur {
 
 	@FXML
 	private ComboBox <String> selectionVersion;
-	
+		
 	private Comptage comptageRS;
 	
 	private ObservableList <Comptage> comptages;
@@ -89,55 +75,11 @@ public class AppControleur {
 	{
 		// La liste des rubriques de solde.
 		List <Comptage> comptages = recupererRS();
+				
+		Graphe graphe = new Graphe(comptages);
 		
-		// La rubrique de solde centrale.
-		String rsCentrale = comptageRS.getRubriqueSolde();
-		
-		Graph graph = new SingleGraph("Graphe");
-		graph.addAttribute("ui.stylesheet", "url('" + Main.class.getResource("/graphe.css") +"')");
-		
-		for(int i = 0; i < comptages.size(); i++)
-		{
-			String rs = comptages.get(i).getRubriqueSolde();
-			
-			graph.addNode(rs);
-			graph.addEdge(rsCentrale + rs, rsCentrale, rs);
-			graph.getNode(i).addAttribute("ui.label", rs);
-			
-			if (comptages.get(i).getCompteurEvo() > 0)
-			{
-				graph.getNode(i).addAttribute("ui.class", "evo");
-			}
-			
-			else if (comptages.get(i).getCompteurBar() > 0)
-			{
-				graph.getNode(i).addAttribute("ui.class", "bar");
-			}
-		}
-		
-		/*SwingNode swingNode = new SwingNode();
-		
-		BorderPane root = (BorderPane) selectionRS.getScene().getRoot();
-		
-		Viewer viewer = new Viewer(graph, Viewer.ThreadingModel.GRAPH_IN_GUI_THREAD);
-        ViewPanel viewPanel = viewer.addDefaultView(false);
-        
-        createAndSetSwingContent(swingNode, viewPanel);
-        
-        /*JPanel panel = new JPanel();
-        panel.add(viewPanel);
-        swingNode.setContent(panel);
-        
-        StackPane stack = new StackPane();
-        
-        stack.setLayoutX(100);
-        stack.setLayoutY(100);
-        stack.getChildren().add(swingNode);
-       
-        root.getChildren().add(swingNode);
-		//root.getChildren().add(/*new Bulle(100, 100, comptageRS));//stack);*/
-        		
-		graph.display();
+		graphe.construire();
+		graphe.afficher(selectionRS.getScene());
 	}
 	
 	/**
@@ -186,15 +128,4 @@ public class AppControleur {
 		
 		return comptagesSelonVersion;
 	}
-	
-	private void createAndSetSwingContent(final SwingNode swingNode, final ViewPanel viewPanel) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                JPanel panel = new JPanel();
-                panel.add(viewPanel);
-                swingNode.setContent(panel);
-            }
-        });
-    }
 }

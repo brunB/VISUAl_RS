@@ -17,6 +17,8 @@ public class Main extends Application {
 	@Override
 	public void start(Stage stage)
 	{
+		System.setProperty("gs.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		
 		try 
 		{
 			Loader.charger("/rs/smsif/compteur/view/App.fxml", "Application");
