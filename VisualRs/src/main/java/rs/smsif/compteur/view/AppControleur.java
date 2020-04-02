@@ -2,7 +2,6 @@ package rs.smsif.compteur.view;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +10,7 @@ import javafx.scene.control.ComboBox;
 
 import rs.smsif.compteur.model.Comptage;
 import rs.smsif.compteur.model.Graphe;
+import rs.smsif.compteur.utils.OutilsComptage;
 
 public class AppControleur {
 
@@ -19,26 +19,30 @@ public class AppControleur {
 
 	@FXML
 	private ComboBox <String> selectionVersion;
-		
-	private Comptage comptageRS;
 	
-	private ObservableList <Comptage> comptages;
+	private Graphe graphe;
+	
+	private ObservableList <Comptage> comptagesBDD;
 
 	/**
 	 * Constructeur.
 	 */
 	public AppControleur()
 	{
-		comptages = FXCollections.observableArrayList();
+		graphe = new Graphe();
+
+		comptagesBDD = FXCollections.observableArrayList();
 		
-		comptages.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
-		comptages.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
-		comptages.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
-		comptages.add(new Comptage("07.14.01.a.r01","TAOPC","TAOPCO",13,3,3,1));
-		comptages.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
-		comptages.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
-		comptages.add(new Comptage("07.20.01.a.r02","FORM","FORMAT",30,2,10,1));
-		comptages.add(new Comptage("07.20.01.a.r02","FORM","RECRUT",37,2,11,1));
+		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
+		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","TAOPCO",13,3,3,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,0));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,0));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
 	}
 
 	@FXML
@@ -57,7 +61,12 @@ public class AppControleur {
 
 			if (!selectionVersion.getSelectionModel().isEmpty())
 			{
-				construireGraphique();
+				// Récupération de la rubrique de solde centrale au graphique.
+				Comptage rsCentrale = recupererComptageCentral();
+
+				construireGraphique(rsCentrale);
+				
+				graphe.afficher(selectionRS.getScene());
 			}
 		});
 
@@ -66,33 +75,51 @@ public class AppControleur {
 
 			if (!selectionRS.getSelectionModel().isEmpty())
 			{
-				construireGraphique();
+				// Récupération de la rubrique de solde centrale au graphique.
+				Comptage rsCentrale = recupererComptageCentral();
+
+				construireGraphique(rsCentrale);
+				
+				graphe.afficher(selectionRS.getScene());
 			}
 		});
 	}
 	
-	public void construireGraphique()
-	{
-		// La liste des rubriques de solde.
-		List <Comptage> comptages = recupererRS();
-				
-		Graphe graphe = new Graphe(comptages);
+	public void construireGraphique(Comptage rsCentrale)
+	{		
+		// La liste des rubriques de solde associée à la rubrique centrale.
+		List <Comptage> comptagesSelonVersion = OutilsComptage.recupererRubriqueSolde(rsCentrale, comptagesBDD);
+
+		graphe.construire(rsCentrale, comptagesSelonVersion);
 		
-		graphe.construire();
-		graphe.afficher(selectionRS.getScene());
+		// Récupération des rubriques de soldes associées aux rubriques filles.
+		for (Comptage comptage : comptagesSelonVersion)
+		{
+			if (comptage.getIndic() == 0)
+			{
+				List <Comptage> medros = OutilsComptage.recupererMedros(comptage, comptagesBDD);
+
+				for (Comptage medro : medros)
+				{
+					construireGraphique(medro);
+				}
+			}
+		}
 	}
 	
 	/**
-	 * Retourne les rubriques de solde associées à celle demandée pour la version souhaitée.
-	 * Dans le cas où la rubrique de solde n'existe pas pour la version,
-	 * la dernière plus récente version sera prise en compte.
+	 * Retourne la rubrique de solde centrale.
+	 * Si la rubrique n'existe pas pour les versions demandées, les plus récentes dernières versions
+	 * qui contiennent la rubrique sont sélectionnées.
 	 * 
-	 * @return les rubriques de solde associées à celle demandée pour la version souhaitée.
+	 * @return la rubrique de solde centrale.
 	 */
-	public List <Comptage> recupererRS()
-	{			
-		String rubriqueSolde = selectionRS.getSelectionModel().getSelectedItem();
+	public Comptage recupererComptageCentral()
+	{
+		Comptage rsCentrale = null;
 		
+		// Récupération des informations choisies par l'utilsiateur.
+		String rubriqueSolde = selectionRS.getSelectionModel().getSelectedItem();
 		int indiceVersion = selectionVersion.getSelectionModel().getSelectedIndex();
 		
 		// Récupération de la dernière plus récente version
@@ -101,31 +128,19 @@ public class AppControleur {
 		{
 			String version = selectionVersion.getItems().get(i);
 
-			Optional <Comptage> comptage = comptages.stream()
+			Optional <Comptage> comptage = comptagesBDD.stream()
 			  										.filter(item -> item.getVersion().equals(version))
 			  										.filter(item -> item.getRubriqueSolde().equals(rubriqueSolde))
 			  										.findFirst();
 
 			if (comptage.isPresent())
 			{
-				comptageRS = comptage.get();
+				rsCentrale = comptage.get();
 
 				break;
 			}
 		}
-
-		String comptageRSVersion = comptageRS.getVersion();
-
-		// Récupération des rubriques de soldes associées à celle choisie.
-		// Celle choisie doit être exclue.
-		List <Comptage> comptagesSelonVersion = comptages.stream()
-	   		        									 .filter(item -> item.getVersion().equals(comptageRSVersion))
-	   		        									 .filter(item -> !item.getRubriqueSolde().equals(rubriqueSolde))
-	   		        									 .collect(Collectors.toList());
 		
-		
-		comptagesSelonVersion.add(0, comptageRS);
-		
-		return comptagesSelonVersion;
+		return rsCentrale;
 	}
 }

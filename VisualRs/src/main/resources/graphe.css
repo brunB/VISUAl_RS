@@ -1,5 +1,9 @@
+graph {
+	padding: 100px;
+}
+
 node {
-	size: 100px, 100px;
+	size: 150px, 150px;
 	fill-color: blue;
 	text-mode: normal;
 	text-size: 20px;
@@ -7,14 +11,14 @@ node {
 }
 
 node.evo {
-	size: 100px, 100px;
+	size: 150px, 150px;
 	fill-color: red;
 	text-mode: normal;
 	text-size: 20px;
 }
 
 node.bar {
-	size: 100px, 100px;
+	size: 150px, 150px;
 	fill-color: green;
 	text-mode: normal;
 	text-size: 20px;

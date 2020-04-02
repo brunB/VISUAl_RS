@@ -66,9 +66,14 @@ public class Comptage {
 		return indic;
 	}
 	
+	public String getId()
+	{
+		return version + rubriqueSolde;
+	}
+	
 	@Override
 	public String toString()
 	{
-		return version + " " + rubriqueSolde;
+		return version + " " + medro + " " + rubriqueSolde;
 	}
 }
