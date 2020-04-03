@@ -5,6 +5,12 @@ import java.util.stream.Collectors;
 
 import rs.smsif.compteur.model.Comptage;
 
+/**
+ * Cette classe permet d'effectuer des actions sur les rubriques de solde.
+ * 
+ * @author gmarco
+ *
+ */
 public class OutilsComptage {
 	
 	/**

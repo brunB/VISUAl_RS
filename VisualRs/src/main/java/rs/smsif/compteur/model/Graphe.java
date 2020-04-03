@@ -15,8 +15,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 
+/**
+ * Cette classe permet de construire le graphe des rubriques de solde.
+ * 
+ * @author gmarco
+ *
+ */
 public class Graphe extends SingleGraph {
-		
+	
+	/**
+	 * Constructeur.
+	 */
 	public Graphe()
 	{
 		super("Graphe");
@@ -24,6 +33,12 @@ public class Graphe extends SingleGraph {
 		addAttribute("ui.stylesheet", "url('" + Main.class.getResource("/graphe.css") +"')");
 	}
 	
+	/**
+	 * Construit le graphe des rubriques de solde associées à une rubrique centrale.
+	 * 
+	 * @param comptageCentral la rubrique de solde centrale.
+	 * @param comptages les rubriques de solde associées à la rubrique centrale.
+	 */
 	public void construire(Comptage comptageCentral, List <Comptage> comptages)
 	{
 		comptages.add(0, comptageCentral);
@@ -41,13 +56,20 @@ public class Graphe extends SingleGraph {
 			if (getNode(id) == null)
 			{
 				addNode(id);
-				getNode(id).addAttribute("ui.label", comptages.get(i).getMedro());
+				getNode(id).addAttribute("ui.label", comptages.get(i).getRubriqueSolde());
 			}
 			
 			// Pour la rs centrale, il n'y a aucun lien avec elle-même.
-			if (i > 0)
+			if (i > 0 )
 			{
 				addEdge(idRsCentrale + id, id, idRsCentrale, true);//.addAttribute("layout.weight", 2);
+				
+				// Les rubriques de solde s'impacte l'une et l'autre.
+				// Création d'une flèche bidirectionnelle.
+				if (comptages.get(i).getIndic() == 1)
+				{
+					addEdge(id + idRsCentrale, idRsCentrale, id, true);
+				}
 			}
 			
 			if (comptages.get(i).getCompteurEvo() > 0)
@@ -64,6 +86,11 @@ public class Graphe extends SingleGraph {
 		comptages.remove(comptageCentral);
 	}
 	
+	/**
+	 * Affiche le graphe.
+	 * 
+	 * @param sceneParent la scène sur laquelle le graphe est affiché.
+	 */
 	public void afficher(Scene sceneParent)
 	{				
 		// Sauvegarde du graphe sous forme d'image.
