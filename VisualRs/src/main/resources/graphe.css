@@ -1,20 +1,30 @@
+graph {
+	padding: 100px;
+}
+
 node {
-	size: 50px, 50px;
+	size: 150px, 150px;
 	fill-color: blue;
 	text-mode: normal;
 	text-size: 20px;
+	text-alignment: center;
 }
 
 node.evo {
-	size: 50px, 50px;
+	size: 150px, 150px;
 	fill-color: red;
 	text-mode: normal;
 	text-size: 20px;
 }
 
 node.bar {
-	size: 50px, 50px;
+	size: 150px, 150px;
 	fill-color: green;
 	text-mode: normal;
 	text-size: 20px;
+}
+
+edge {
+	arrow-shape: arrow;
+	arrow-size: 30px, 15px;
 }
