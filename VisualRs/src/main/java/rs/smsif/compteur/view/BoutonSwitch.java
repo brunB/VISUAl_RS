@@ -70,13 +70,11 @@ public class BoutonSwitch extends HBox {
 	}
 	
 	/**
-	 * Définit l'état du bouton (on/off).
-	 * 
-	 * @param etat l'état du bouton (on/off).
+	 * Change l'état du bouton (on/off).
 	 */
-	public void definirEtat(boolean etat)
-	{
-		if (etat)
+	public void changerEtat()
+	{		
+		if (switchedOn.get())
 		{
     		texte.setText(texteDroite);
     		texte.toFront();

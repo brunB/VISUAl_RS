@@ -23,6 +23,8 @@ public class AppControleur {
 	@FXML
 	private ComboBox <String> selectionVersionAnalysee;
 	
+	private BoutonSwitch boutonSelectionVersion;
+	
 	private Graphe graphe;
 	
 	private ObservableList <Comptage> comptagesBDD;
@@ -60,7 +62,7 @@ public class AppControleur {
 		selectionVersionReference.setItems(versions);
 		selectionVersionAnalysee.setItems(versions);
 
-		// Chargement du graphique si le numéro de version est renseigné.
+		// Chargement du graphique si la version de référence et analysée sont renseignées.
 		selectionRS.valueProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
 
 			if (!selectionVersionReference.getSelectionModel().isEmpty()
@@ -70,7 +72,7 @@ public class AppControleur {
 			}
 		});
 
-		// Chargement du graphique si la rubrique de solde est renseignée.
+		// Chargement du graphique si la rubrique de solde et la version analysée sont renseignées.
 		selectionVersionReference.valueProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
 
 			if (!selectionRS.getSelectionModel().isEmpty()
@@ -80,7 +82,7 @@ public class AppControleur {
 			}
 		});
 		
-		// Chargement du graphique si la rubrique de solde est renseignée.
+		// Chargement du graphique si la rubrique de solde et la version de référence sont renseignées.
 		selectionVersionAnalysee.valueProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
 
 			if (!selectionRS.getSelectionModel().isEmpty()
@@ -97,20 +99,27 @@ public class AppControleur {
 	 */
 	public void genererInterfaceSelonVersion()
 	{
+		// Récupération des versions.
 		String versionReference = selectionVersionReference.getSelectionModel().getSelectedItem();
 		String versionAnalysee = selectionVersionAnalysee.getSelectionModel().getSelectedItem();
-		
-		BoutonSwitch bouton = new BoutonSwitch(850, 28, versionAnalysee, versionReference);
-
+				
 		BorderPane root = (BorderPane) (selectionRS.getScene().getRoot());
-		root.getChildren().add(bouton);
+		
+		// Création d'un nouveau bouton switch à chaque changement de version.
+		if (root.getChildren().contains(boutonSelectionVersion))
+		{
+			root.getChildren().remove(boutonSelectionVersion);
+		}
+		
+		boutonSelectionVersion = new BoutonSwitch(800, 28, versionAnalysee, versionReference);
+		root.getChildren().add(boutonSelectionVersion);
 		
 		// Création du graphe selon la version choisie.
-		bouton.getSwitchedOnProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
+		boutonSelectionVersion.getSwitchedOnProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
 			
 			Comptage rsCentrale = null;
 
-			bouton.definirEtat(nouvelleValeur);
+			boutonSelectionVersion.changerEtat();
 			
 			if (nouvelleValeur)
 			{
@@ -139,7 +148,14 @@ public class AppControleur {
 		// La liste des rubriques de solde associée à la rubrique centrale.
 		List <Comptage> comptagesSelonVersion = OutilsComptage.recupererRubriqueSolde(rsCentrale, comptagesBDD);
 
-		graphe.construire(rsCentrale, comptagesSelonVersion);
+		int totalCompteurTotal = 0;
+		
+		for (Comptage comptage : comptagesSelonVersion)
+		{
+			totalCompteurTotal += comptage.getCompteurTot();
+		}
+				
+		graphe.construire(rsCentrale, comptagesSelonVersion, totalCompteurTotal);
 		
 		// Récupération des rubriques de soldes associées aux rubriques filles.
 		for (Comptage comptage : comptagesSelonVersion)
