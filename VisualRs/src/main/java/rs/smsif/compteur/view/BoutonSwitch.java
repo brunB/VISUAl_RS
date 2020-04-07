@@ -46,10 +46,12 @@ public class BoutonSwitch extends HBox {
 				
 		bouton.setOnAction((e) -> {
 			switchedOn.set(!switchedOn.get());
+			changerEtat();
 		});
 		
 		texte.setOnMouseClicked((e) -> {
 			switchedOn.set(!switchedOn.get());
+			changerEtat();
 		});
 				
 		lierProprietes();
@@ -72,7 +74,7 @@ public class BoutonSwitch extends HBox {
 	/**
 	 * Change l'état du bouton (on/off).
 	 */
-	public void changerEtat()
+	private void changerEtat()
 	{		
 		if (switchedOn.get())
 		{

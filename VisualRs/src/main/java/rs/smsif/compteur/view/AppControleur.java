@@ -25,7 +25,9 @@ public class AppControleur {
 	
 	private BoutonSwitch boutonSelectionVersion;
 	
-	private Graphe graphe;
+	private Graphe grapheVersionReference;
+	
+	private Graphe grapheVersionAnalysee;
 	
 	private ObservableList <Comptage> comptagesBDD;
 
@@ -41,6 +43,8 @@ public class AppControleur {
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,1));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","AAAA",2,0,0,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","YYYY",4,0,0,1));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","AAAA",4,0,0,1));
 		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","TAOPCO",13,3,3,1));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
@@ -48,6 +52,9 @@ public class AppControleur {
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,0));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,0));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","FORMAT",30,2,10,1));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","RECRUT",37,2,0,0));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,0));
 	}
 
 	@FXML
@@ -114,27 +121,34 @@ public class AppControleur {
 		boutonSelectionVersion = new BoutonSwitch(800, 28, versionAnalysee, versionReference);
 		root.getChildren().add(boutonSelectionVersion);
 		
+		// Génération du graphe de la version de référence.
+		grapheVersionReference = new Graphe();
+		Comptage rsCentraleReference = recupererComptageCentral(selectionVersionReference);
+		construireGraphique(rsCentraleReference, grapheVersionReference);
+		
+		// Affichage du graphe de référence par défaut.
+		grapheVersionReference.afficher(selectionRS.getScene());
+		
+		// Génération du graphe de la version analysée.
+		// Le graphe de la version analysée s'appuie sur celui de référence.
+		// Les noeuds en commun sont conservés à la même position, autant que possible.
+		// La comparaison est ainsi plus facile à faire.
+		grapheVersionAnalysee = new Graphe(grapheVersionReference.recupererCoordonneesNoeuds());
+		Comptage rsCentraleAnalysee = recupererComptageCentral(selectionVersionAnalysee);
+		construireGraphique(rsCentraleAnalysee, grapheVersionAnalysee);
+
 		// Création du graphe selon la version choisie.
 		boutonSelectionVersion.getSwitchedOnProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
-			
-			Comptage rsCentrale = null;
-
-			boutonSelectionVersion.changerEtat();
-			
+						
 			if (nouvelleValeur)
 			{
-				// Récupération de la rubrique de solde centrale au graphique.
-				rsCentrale = recupererComptageCentral(selectionVersionAnalysee);
+				grapheVersionAnalysee.afficher(selectionRS.getScene());
 			}
 			
 			else
 			{
-				// Récupération de la rubrique de solde centrale au graphique.
-				rsCentrale = recupererComptageCentral(selectionVersionReference);
+				grapheVersionReference.afficher(selectionRS.getScene());
 			}
-			
-			construireGraphique(rsCentrale);
-			graphe.afficher(selectionRS.getScene());
 		});
 	}
 	
@@ -143,7 +157,7 @@ public class AppControleur {
 	 * 
 	 * @param rsCentrale la rubrique de solde centrale.
 	 */
-	public void construireGraphique(Comptage rsCentrale)
+	public void construireGraphique(Comptage rsCentrale, Graphe graphe)
 	{		
 		// La liste des rubriques de solde associée à la rubrique centrale.
 		List <Comptage> comptagesSelonVersion = OutilsComptage.recupererRubriqueSolde(rsCentrale, comptagesBDD);
@@ -166,7 +180,7 @@ public class AppControleur {
 
 				for (Comptage medro : medros)
 				{
-					construireGraphique(medro);
+					construireGraphique(medro, graphe);
 				}
 			}
 		}
@@ -181,8 +195,6 @@ public class AppControleur {
 	 */
 	public Comptage recupererComptageCentral(ComboBox <String> comboBoxVersion)
 	{
-		graphe = new Graphe();
-
 		Comptage rsCentrale = null;
 		
 		// Récupération des informations choisies par l'utilsiateur.
