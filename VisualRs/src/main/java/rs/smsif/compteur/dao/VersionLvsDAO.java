@@ -90,15 +90,13 @@ public class VersionLvsDAO extends DAO<VersionLvs> {
 	 *
 	 */
 	public List<String> selectAllString() {
-		VersionLvs VLvs = new VersionLvs();
 		DAO<VersionLvs> versionLvsDao = new VersionLvsDAO(VisualrsConnexion.getInstance());
 		List<VersionLvs> listVersionLvs = versionLvsDao.selectAll();
 		List<String> listVersionLvsString = new ArrayList<String>();
-		ListIterator<VersionLvs> it = listVersionLvs.listIterator();
-		while (it.hasNext()) {
-			VLvs = it.next();
-			listVersionLvsString.add(VLvs.getVersion());
+		for (VersionLvs vLvs : listVersionLvs) {
+			listVersionLvsString.add(vLvs.getVersion());
 		}
+
 		return listVersionLvsString;
 	}
 

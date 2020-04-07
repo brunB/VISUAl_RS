@@ -75,8 +75,7 @@ public class AppControleur {
 		selectionRS.setItems(rubriquesSolde);
 
 		/* LISTE DES VERSIONS FIGEES OBTENUE A PARTIR D'UNE TABLE */
-		ObservableList <String> version = FXCollections.observableArrayList(listVersionLvs);
-		selectionVersion.setItems(version);
+		ObservableList <String> versions = FXCollections.observableArrayList(listVersionLvs);
 		selectionVersionReference.setItems(versions);
 		selectionVersionAnalysee.setItems(versions);
 

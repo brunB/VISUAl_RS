@@ -68,7 +68,6 @@ public class Comptage {
 	public int getIndic() {
 		return indic;
 	}
-<<<<<<< HEAD
 
 	/**
 	 * @param version the version to set
@@ -126,11 +125,11 @@ public class Comptage {
 	{
 		return "La version est "+version + " pour la RS " + rubriqueSolde + " de la medro " + medro;
 
-	public String getId()
-	{
-		return version + rubriqueSolde;
+
 	}
 
-
+	public String getId() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
