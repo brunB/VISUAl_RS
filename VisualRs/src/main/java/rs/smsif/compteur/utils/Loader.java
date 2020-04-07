@@ -37,10 +37,10 @@ public class Loader
         stage.setScene(scene);
         stage.setTitle(titre);
         stage.setResizable(false);
+        stage.setMaximized(true);
         
         stage.show();
         
         return loader.getController();
 	}
 }
-

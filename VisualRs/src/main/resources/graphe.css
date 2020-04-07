@@ -1,0 +1,35 @@
+graph {
+	padding: 50px;
+}
+
+node {
+	size: 70px, 70px;
+	fill-color: #4fa7ff;
+	text-mode: normal;
+	text-size: 10px;
+	text-alignment: center;
+}
+
+node.evo {
+	size: 70px, 70px;
+	fill-color: red;
+	text-mode: normal;
+	text-size: 10px;
+	text-alignment: center;
+}
+
+node.bar {
+	size: 70px, 70px;
+	fill-color: #3dd20b;
+	text-mode: normal;
+	text-size: 10px;
+	text-alignment: center;
+}
+
+edge {
+	arrow-shape: arrow;
+	arrow-size: 15px, 7px;
+	text-mode: normal;
+	text-size: 15px;
+	text-alignment: under;
+}

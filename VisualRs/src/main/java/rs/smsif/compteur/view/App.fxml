@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.embed.swing.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="502.0" prefWidth="854.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.smsif.compteur.view.AppControleur">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="552.0" prefWidth="998.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="rs.smsif.compteur.view.AppControleur">
    <center>
-      <AnchorPane prefHeight="558.0" prefWidth="851.0" BorderPane.alignment="CENTER">
+      <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="selectionRS" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Rubrique de Solde" />
-            <ComboBox fx:id="selectionVersion" layoutX="282.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Version" />
+            <ComboBox fx:id="selectionRS" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Rubrique de Solde" />
+            <ComboBox fx:id="selectionVersionReference" layoutX="264.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version de référence" />
+            <ComboBox fx:id="selectionVersionAnalysee" layoutX="499.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version analysée" />
          </children>
       </AnchorPane>
    </center>
