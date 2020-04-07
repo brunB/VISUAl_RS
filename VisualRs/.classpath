@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src/main/resources"/>
-	<classpathentry kind="src" path="src/main/java"/>
-	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
-<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ojdbc8.jar"/>
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ons.jar"/>
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/oraclepki.jar"/>
@@ -13,11 +9,5 @@
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/simplefan.jar"/>
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ucp.jar"/>
 	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/xdb6.jar"/>
-=======
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="src/main/resources/gs-algo-1.3.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/gs-core-2.0-alpha.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/gs-ui-javafx-2.0-alpha.jar"/>
->>>>>>> e52d902c67c30209a829f3f3c8967435cd13dc19
 	<classpathentry kind="output" path="bin"/>
 </classpath>
