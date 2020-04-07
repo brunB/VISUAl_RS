@@ -3,5 +3,14 @@
 	<classpathentry kind="src" path="src/main/java"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.fx.ide.jdt.core.JAVAFX_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ojdbc8.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ons.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/oraclepki.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/orai18n.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/osdt_cert.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/osdt_core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/simplefan.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/ucp.jar"/>
+	<classpathentry kind="lib" path="C:/Users/neo/Documents/Doc_perso/programmation/java/ojdbc8-full/xdb6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

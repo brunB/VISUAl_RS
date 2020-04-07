@@ -8,7 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import rs.smsif.compteur.dao.ComptageDAO;
+import rs.smsif.compteur.dao.DAO;
+import rs.smsif.compteur.dao.VersionLvsDAO;
+import rs.smsif.compteur.dao.VisualrsConnexion;
 import rs.smsif.compteur.model.Comptage;
+import rs.smsif.compteur.model.VersionLvs;
 
 public class AppControleur {
 
@@ -40,12 +45,17 @@ public class AppControleur {
 	@FXML
 	private void initialize()
 	{
+		VersionLvsDAO vld = new VersionLvsDAO(VisualrsConnexion.getInstance());
+		List<String> listVersionLvs = vld.selectAllString();
+		for (String string : listVersionLvs) {
+			System.out.println(string);
+		}
 		/* LISTE DES RS FIGEES OBTENUE A PARTIR D'UNE TABLE */
 		ObservableList <String> rubriquesSolde = FXCollections.observableArrayList("TAOPCO");
 		selectionRS.setItems(rubriquesSolde);
 
 		/* LISTE DES VERSIONS FIGEES OBTENUE A PARTIR D'UNE TABLE */
-		ObservableList <String> version = FXCollections.observableArrayList("07.14.01.a.r01","07.15.00.d.r01", "07.19.00.c.r01","07.19.00.d.r01", "07.20.01.a.r01");
+		ObservableList <String> version = FXCollections.observableArrayList(listVersionLvs);
 		selectionVersion.setItems(version);
 
 		// Chargement du graphique si le numéro de version est renseigné.
