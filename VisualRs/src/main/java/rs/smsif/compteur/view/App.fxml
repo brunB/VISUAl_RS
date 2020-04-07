@@ -12,9 +12,9 @@
    <center>
       <AnchorPane style="-fx-background-color: white;" BorderPane.alignment="CENTER">
          <children>
-            <ComboBox fx:id="selectionRS" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Rubrique de Solde" />
-            <ComboBox fx:id="selectionVersionReference" layoutX="282.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Version de référence" />
-            <ComboBox fx:id="selectionVersionAnalysee" layoutX="534.0" layoutY="28.0" prefHeight="39.0" prefWidth="227.0" promptText="Version analysée" />
+            <ComboBox fx:id="selectionRS" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Rubrique de Solde" />
+            <ComboBox fx:id="selectionVersionReference" layoutX="264.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version de référence" />
+            <ComboBox fx:id="selectionVersionAnalysee" layoutX="499.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version analysée" />
          </children>
       </AnchorPane>
    </center>

@@ -44,4 +44,3 @@ public class Loader
         return loader.getController();
 	}
 }
-
