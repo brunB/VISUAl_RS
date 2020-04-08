@@ -15,7 +15,7 @@ import rs.smsif.compteur.utils.Loader;
 public class Main extends Application {
 
 	public static void main(String[] args) {
-		System.setProperty("gs.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
 		launch(args);
 		System.exit(0);
 	}
@@ -54,13 +54,13 @@ public class Main extends Application {
 
 		  System.out.println(versionLvs.toString()); }
 
-		/*
+		
 		try {
 			Loader.charger("/rs/smsif/compteur/view/App.fxml", "VisualRS");
 
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		*/
+		
 	}
 }

@@ -44,7 +44,7 @@ public class Graphe extends SingleGraph {
 	{
 		super("Graphe");
 
-		//System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
 		this.coordonnees = coordonnees;
 		

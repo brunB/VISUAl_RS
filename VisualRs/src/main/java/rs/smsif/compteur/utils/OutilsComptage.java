@@ -30,7 +30,7 @@ public class OutilsComptage {
 		// Récupération des rubriques de soldes associées à celle choisie.
 		// Celle choisie doit être exclue.
 		List <Comptage> comptagesSelonVersion = comptages.stream()
-	   		        									 .filter(item -> item.getVersion().equals(version))
+	   		        									 .filter(item -> item.getVersion().substring(0, 10).equals(version.substring(0, 10)))
 	   		        									 .filter(item -> item.getMedro().equals(medro))
 	   		        									 .filter(item -> !item.getRubriqueSolde().equals(rubriqueSolde))
 	   		        									 .collect(Collectors.toList());
@@ -53,8 +53,9 @@ public class OutilsComptage {
 		
 		// Récupération des comptages ayant la même rubrique de solde.
 		List <Comptage> comptagesSelonMedro = comptages.stream()
-					 								   .filter(item -> item.getVersion().equals(version))
+					 								   .filter(item -> item.getVersion().substring(0, 10).equals(version.substring(0, 10)))
 					 								   .filter(item -> item.getRubriqueSolde().equals(rubriqueSolde))
+					 								   .filter(item -> item.getIndic() == 1)
 					 								   .collect(Collectors.toList());
 		
 		comptagesSelonMedro.remove(comptage);

@@ -129,7 +129,7 @@ public class Comptage {
 	}
 
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+
+		return version + rubriqueSolde + medro;
 	}
 }
