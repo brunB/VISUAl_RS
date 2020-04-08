@@ -1,0 +1,15 @@
+--------------------------------------------------------
+--  DDL for Table HISTO_VERSION_LVS
+--------------------------------------------------------
+
+CREATE TABLESPACE TBS_HISTO_VERSION_LVS datafile 'D:\app\neo\oradata\VISUALRS\tbs_histo_version_lvs.dbf' size 80M AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED EXTENT MANAGEMENT LOCAL AUTOALLOCATE SEGMENT SPACE MANAGEMENT AUTO;
+
+
+  CREATE TABLE DX.HISTO_VERSION_LVS 
+   (	
+    ID INT PRIMARY KEY NOT NULL,
+	VERSION_LVS VARCHAR2(14 CHAR)
+   )TABLESPACE TBS_HISTO_VERSION_LVS;
+
+   COMMENT ON COLUMN "DX"."HISTO_VERSION_LVS"."ID" IS 'Identifiant d''unicité de la version LOUVOIS';
+   COMMENT ON COLUMN "DX"."HISTO_VERSION_LVS"."VERSION_LVS" IS 'Version LVS';
