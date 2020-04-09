@@ -8,11 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import rs.smsif.compteur.dao.ComptageDAO;
-import rs.smsif.compteur.dao.DAO;
 import rs.smsif.compteur.dao.VersionLvsDAO;
 import rs.smsif.compteur.dao.VisualrsConnexion;
 import rs.smsif.compteur.model.Comptage;
-import rs.smsif.compteur.model.VersionLvs;
 import javafx.scene.layout.BorderPane;
 import rs.smsif.compteur.model.Graphe;
 import rs.smsif.compteur.utils.OutilsComptage;
@@ -42,8 +40,13 @@ public class AppControleur {
 	public AppControleur()
 	{
 		comptagesBDD = FXCollections.observableArrayList();
-
-		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		
+		ComptageDAO vld = new ComptageDAO(VisualrsConnexion.getInstance());
+		List<Comptage> listeComptage = vld.selectAll();
+		
+		comptagesBDD.addAll(listeComptage);
+		
+		/*comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,1));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","AAAA",2,0,0,1));
@@ -59,7 +62,7 @@ public class AppControleur {
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","FORMAT",30,2,10,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","RECRUT",37,2,0,0));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,0));
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,0));*/
 	}
 
 	@FXML

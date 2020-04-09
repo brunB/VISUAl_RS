@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import rs.smsif.compteur.model.Comptage;
@@ -175,7 +176,47 @@ public class ComptageDAO extends DAO<Comptage> {
 
 	@Override
 	public List<Comptage> selectAll() {
-		return null;
+		List<Comptage> listComptage = new ArrayList<Comptage>();
+
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "SELECT * FROM DX.COMPTEURS_RS";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			ResultSet result = prepare.executeQuery();
+			result.first();
+			// Création d'un objet VersionLvs puis ajout dans la liste
+			while (result.next()) {
+				Comptage comptage = new Comptage();
+
+				comptage.setVersion(result.getString("VERSION"));
+				comptage.setMedro(result.getString("MEDRO"));
+				comptage.setRubriqueSolde(result.getString("RS"));
+				comptage.setCompteurTot(result.getInt("CPT_TOT"));
+				comptage.setCompteurBar(result.getInt("CPT_BAR"));
+				comptage.setCompteurEvo(result.getInt("CPT_EVO"));
+				comptage.setIndic(result.getInt("INDIC"));
+				
+				listComptage.add(comptage);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listComptage;
 	}
 
 }

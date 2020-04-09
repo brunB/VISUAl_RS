@@ -1,12 +1,10 @@
 package rs.smsif.compteur.model;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import rs.smsif.compteur.dao.ComptageDAO;
 import rs.smsif.compteur.dao.DAO;
 import rs.smsif.compteur.dao.VersionLvsDAO;
 import rs.smsif.compteur.dao.VisualrsConnexion;
