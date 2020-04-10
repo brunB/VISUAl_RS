@@ -108,6 +108,17 @@ public class Graphe extends SingleGraph {
 		arc.setAttribute("ui.label", texte);
 	}
 	
+	public void creerNoeudDonneesManquantes(String idNoeudSource)
+	{
+		String idNoeud = idNoeudSource + "donneesmanquantes";
+		
+		Node noeud = addNode(idNoeud);
+		//noeud.setAttribute("ui.label", "Manque de\n données sur\n la MEDRO\n d'appartenance");
+		noeud.setAttribute("ui.class", "donneesmanquantes");
+		
+		addEdge(idNoeudSource + "->" + idNoeud, idNoeudSource, idNoeud, false);
+	}
+	
 	/**
 	 * Affiche le graphe.
 	 * 

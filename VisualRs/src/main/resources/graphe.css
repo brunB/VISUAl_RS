@@ -26,6 +26,12 @@ node.bar {
 	text-alignment: center;
 }
 
+node.donneesmanquantes {
+	shape: box;
+	size: 50px;
+	fill-color: black;
+}
+
 edge {
 	arrow-shape: arrow;
 	arrow-size: 15px, 7px;

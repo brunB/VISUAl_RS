@@ -232,15 +232,23 @@ public class AppControleur {
 					graphe.creerArc(idRSCentrale, idRS, "");
 				}
 				
-				if (comptage.getIndic() == 0)
+				else if (comptage.getIndic() == 0)
 				{
 					List <Comptage> medros = OutilsComptage.recupererMedros(comptage, comptagesBDD);
-
-					// TODO : si tous indicateurs à 0 alors afficher bulle données manquantes.
 					
-					for (Comptage m : medros)
+					// Si la liste est vide, cela signifie que tous les indicateurs sont à 0.
+					// Ajout d'une bulle pour informer de données manquantes.
+					if (medros.isEmpty())
 					{
-						construireGraphique(comptage, m.getMedro(), graphe);
+						graphe.creerNoeudDonneesManquantes(idRS);
+					}
+					
+					else
+					{
+						for (Comptage m : medros)
+						{
+							construireGraphique(comptage, m.getMedro(), graphe);
+						}
 					}
 				}
 			}
