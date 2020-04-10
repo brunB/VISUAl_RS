@@ -110,12 +110,16 @@ public class Graphe extends SingleGraph {
 	
 	public void creerNoeudDonneesManquantes(String idNoeudSource)
 	{
-		String idNoeud = idNoeudSource + "donneesmanquantes";
+		String idNoeud = "donneesmanquantes";
 		
-		Node noeud = addNode(idNoeud);
-		//noeud.setAttribute("ui.label", "Manque de\n données sur\n la MEDRO\n d'appartenance");
-		noeud.setAttribute("ui.class", "donneesmanquantes");
+		Node noeud = getNode(idNoeud);
 		
+		if (noeud == null)
+		{
+			noeud = addNode(idNoeud);
+			noeud.setAttribute("ui.class", "donneesmanquantes");
+		}
+				
 		addEdge(idNoeudSource + "->" + idNoeud, idNoeudSource, idNoeud, false);
 	}
 	
@@ -135,8 +139,8 @@ public class Graphe extends SingleGraph {
 					
 			vue = (FxDefaultView) viewer.addDefaultView(true);
 			vue.setLayoutX(30);
-			vue.setLayoutY(100);
-			vue.resize(1200, 550);
+			vue.setLayoutY(110);
+			vue.resize(1200, 540);
 			
 			// Calcul des positions des noeuds (en Unité Graphiques (GU)).
 			Toolkit.computeLayout(this, layout, 0.9);

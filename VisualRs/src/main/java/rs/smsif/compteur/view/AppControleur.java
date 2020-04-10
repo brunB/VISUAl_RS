@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import rs.smsif.compteur.dao.ComptageDAO;
 import rs.smsif.compteur.dao.DAO;
 import rs.smsif.compteur.dao.VersionLvsDAO;
@@ -27,6 +28,9 @@ public class AppControleur {
 
 	@FXML
 	private ComboBox <String> selectionVersionAnalysee;
+	
+	@FXML
+	private Label texteInformationSelectionVersion;
 
 	private BoutonSwitch boutonSelectionVersion;
 
@@ -49,44 +53,6 @@ public class AppControleur {
 
 		comptagesBDD = FXCollections.observableArrayList();
 		comptagesBDD.addAll(listCompteurs);
-
-		
-		/*comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,0));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","AVAE","YYYY",2,0,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","AVAE","AAAA",2,0,0,0));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","PPPP","AAAA",2,0,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","PPPP","YYYY",2,0,0,0));*/
-		
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,1));
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","TAOPCO",37,2,0,0));
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,0));
-		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
-		
-
-		/*comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","AAAA",2,0,0,1));
-		
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,0));
-		
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
-		
-		
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","YYYY",4,0,0,1));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","AAAA",4,0,0,1));
-		
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","FORMAT",30,2,10,1));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","RECRUT",37,2,0,0));
-		
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,1));*/
 	}
 
 	@FXML
@@ -240,7 +206,7 @@ public class AppControleur {
 					// Ajout d'une bulle pour informer de données manquantes.
 					if (medros.isEmpty())
 					{
-						graphe.creerNoeudDonneesManquantes(idRS);
+						//graphe.creerNoeudDonneesManquantes(idRS);
 					}
 					
 					else
@@ -269,7 +235,8 @@ public class AppControleur {
 		// Récupération des informations choisies par l'utilsiateur.
 		String rubriqueSolde = selectionRS.getSelectionModel().getSelectedItem();
 		int indiceVersion = comboBoxVersion.getSelectionModel().getSelectedIndex();
-
+		String versionInitiale = comboBoxVersion.getSelectionModel().getSelectedItem();
+System.out.println(versionInitiale);
 		// Récupération de la dernière plus récente version
 		// dans laquelle la rubrique de solde existe.
 		for (int i = indiceVersion; i >= 0; i--)
@@ -285,10 +252,30 @@ public class AppControleur {
 			{
 				rsCentrale = comptage.get();
 
+				if (!version.equals(versionInitiale))
+				{
+					texteInformationSelectionVersion.setText("Aucun DSE n'existe pour la rubrique de solde "
+															 + rubriqueSolde + " en version "
+															 + versionInitiale
+															 + ". La version " + version + " a été choisie.");
+					
+					texteInformationSelectionVersion.setVisible(true);
+				}
+
 				break;
 			}
 		}
+		
+		if (rsCentrale == null)
+		{
+			texteInformationSelectionVersion.setText("Aucun DSE n'existe pour la rubrique de solde "
+					 								 + rubriqueSolde + ".");
 
+			texteInformationSelectionVersion.setVisible(true);
+		}
+		
+		System.out.println(rsCentrale);
+				
 		return rsCentrale;
 	}
 }

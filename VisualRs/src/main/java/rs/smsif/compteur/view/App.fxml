@@ -15,6 +15,7 @@
             <ComboBox fx:id="selectionRS" focusTraversable="false" layoutX="31.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Rubrique de Solde" />
             <ComboBox fx:id="selectionVersionReference" focusTraversable="false" layoutX="264.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version de référence" />
             <ComboBox fx:id="selectionVersionAnalysee" focusTraversable="false" layoutX="499.0" layoutY="28.0" prefHeight="39.0" prefWidth="206.0" promptText="Version analysée" />
+            <Label fx:id="texteInformationSelectionVersion" layoutX="31.0" layoutY="83.0" prefHeight="27.0" prefWidth="938.0" text="Information version sélectionnée" visible="false" />
          </children>
       </AnchorPane>
    </center>
