@@ -1,0 +1,7 @@
+################ configuration d'accès à la SGBD ################
+sgbdr.driver=com.oracle.jdbc.Driver
+sgbdr.ip=@localhost
+sgbdr.user=system
+sgbdr.password=VisualRS250
+sgbdr.port=1522
+sgbdr.sid=VISUALRS
