@@ -138,9 +138,14 @@ public class Graphe extends SingleGraph {
 			Layout layout = new SpringBox(false);
 					
 			vue = (FxDefaultView) viewer.addDefaultView(true);
-			vue.setLayoutX(30);
-			vue.setLayoutY(110);
-			vue.resize(1200, 540);
+			
+			int positionX = 30;
+			int positionY = 110;
+			
+			vue.setLayoutX(positionX);
+			vue.setLayoutY(positionY);
+			vue.resize(sceneParent.getWindow().getWidth() - positionX - 30,
+					   sceneParent.getWindow().getHeight() - positionY - 50);
 			
 			// Calcul des positions des noeuds (en Unité Graphiques (GU)).
 			Toolkit.computeLayout(this, layout, 0.9);

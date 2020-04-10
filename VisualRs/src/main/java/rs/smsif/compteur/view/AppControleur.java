@@ -200,22 +200,22 @@ public class AppControleur {
 				
 				else if (comptage.getIndic() == 0)
 				{
-					List <Comptage> medros = OutilsComptage.recupererMedros(comptage, comptagesBDD);
+					List <Comptage> toutesMedrosRS = OutilsComptage.recupererMedros(comptage, comptagesBDD);
 					
 					// Si la liste est vide, cela signifie que tous les indicateurs sont à 0.
 					// Ajout d'une bulle pour informer de données manquantes.
-					if (medros.isEmpty())
+					/*if (medros.isEmpty())
 					{
-						//graphe.creerNoeudDonneesManquantes(idRS);
+						graphe.creerNoeudDonneesManquantes(idRS);
 					}
 					
 					else
-					{
-						for (Comptage m : medros)
+					{*/
+						for (Comptage medroRS : toutesMedrosRS)
 						{
-							construireGraphique(comptage, m.getMedro(), graphe);
+							construireGraphique(comptage, medroRS.getMedro(), graphe);
 						}
-					}
+					//}
 				}
 			}
 		}
@@ -232,11 +232,11 @@ public class AppControleur {
 	{
 		Comptage rsCentrale = null;
 
-		// Récupération des informations choisies par l'utilsiateur.
+		// Récupération des informations choisies par l'utilisateur.
 		String rubriqueSolde = selectionRS.getSelectionModel().getSelectedItem();
 		int indiceVersion = comboBoxVersion.getSelectionModel().getSelectedIndex();
 		String versionInitiale = comboBoxVersion.getSelectionModel().getSelectedItem();
-System.out.println(versionInitiale);
+
 		// Récupération de la dernière plus récente version
 		// dans laquelle la rubrique de solde existe.
 		for (int i = indiceVersion; i >= 0; i--)
@@ -246,6 +246,7 @@ System.out.println(versionInitiale);
 			Optional <Comptage> comptage = comptagesBDD.stream()
 			  										.filter(item -> item.getVersion().equals(version))
 			  										.filter(item -> item.getRubriqueSolde().equals(rubriqueSolde))
+			  										.filter(item -> item.getIndic() == 1)
 			  										.findFirst();
 
 			if (comptage.isPresent())
@@ -273,9 +274,7 @@ System.out.println(versionInitiale);
 
 			texteInformationSelectionVersion.setVisible(true);
 		}
-		
-		System.out.println(rsCentrale);
-				
+						
 		return rsCentrale;
 	}
 }
