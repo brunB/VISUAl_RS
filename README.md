@@ -9,11 +9,11 @@ Visualisation en JAVA FX pour les rubriques de solde
 3. Copier/coller ce qui suit dedans :
 
 ----------------- configuration d'accès à la SGBD -----------------
-sgbdr.driver=com.oracle.jdbc.Driver
-sgbdr.ip=
-sgbdr.user=
-sgbdr.password=
-sgbdr.port=
-sgbdr.sid=
+<br>sgbdr.driver=com.oracle.jdbc.Driver
+<br>sgbdr.ip=
+<br>sgbdr.user=
+<br>sgbdr.password=
+<br>sgbdr.port=
+<br>sgbdr.sid=
 
 REMARQUES : A vous de remplir chacun des champs pour la connexion à la base de données
