@@ -1,2 +1,2 @@
 /bin/
-/src/main/java/rs/smsif/compteur/properties
+/src/main/java/rs/smsif/compteur/properties/*.properties
