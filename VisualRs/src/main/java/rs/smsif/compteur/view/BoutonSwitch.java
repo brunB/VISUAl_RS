@@ -31,8 +31,10 @@ public class BoutonSwitch extends HBox {
 		
 		texte = new Label(texteGauche);
 		texte.setAlignment(Pos.CENTER);
+		texte.setFocusTraversable(false);
 		
 		bouton = new Button();
+		bouton.setFocusTraversable(false);
 		
 		switchedOn.set(false);
 		

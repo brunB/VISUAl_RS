@@ -17,11 +17,11 @@ import java.sql.SQLException;
  */
 public class VisualrsConnexion {
 	// URL de connexion
-	private String url = "jdbc:oracle:thin:@localhost:1522:VISUALRS";
+	private String url = "jdbc:oracle:thin:@localhost:1521:basededonnee";
 	// Nom du user
 	private String user = "system";
 	// Mot de passe de l'utilisateur
-	private String passwd = "VisualRS250";
+	private String passwd = "admin";
 	// Objet Connection
 	private static Connection connect;
 

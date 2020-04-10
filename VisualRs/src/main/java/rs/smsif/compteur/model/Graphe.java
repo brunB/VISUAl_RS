@@ -1,7 +1,6 @@
 package rs.smsif.compteur.model;
 
 import java.util.HashMap;
-import java.util.List;
 
 import org.graphstream.algorithm.Toolkit;
 import org.graphstream.graph.Edge;
@@ -44,40 +43,11 @@ public class Graphe extends SingleGraph {
 	{
 		super("Graphe");
 
-		//System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
 
 		this.coordonnees = coordonnees;
 		
 		setAttribute("ui.stylesheet", "url('" + Main.class.getResource("/graphe.css") +"')");
-	}
-	
-	/**
-	 * Construit le graphe des rubriques de solde associées à une rubrique centrale.
-	 * 
-	 * @param comptageCentral la rubrique de solde centrale.
-	 * @param comptages les rubriques de solde associées à la rubrique centrale.
-	 * @param totalCompteurTotal 
-	 */
-	public void construire(Comptage comptageCentral, List <Comptage> comptages, int totalCompteurTotal)
-	{
-		String idCentral = creerNoeud(comptageCentral);
-		
-		for(int i = 0; i < comptages.size(); i++)
-		{
-			String idNoeud = creerNoeud(comptages.get(i));
-			
-			// Ajout de la proportion de présence de la rubrique de solde.
-			float pourcentage = 100.0f * comptages.get(i).getCompteurTot() / totalCompteurTotal;
-			
-			creerArc(idCentral, idNoeud, String.format("%.1f", pourcentage) + "%");
-			
-			// Les rubriques de solde s'impacte l'une et l'autre.
-			// Création d'une flèche bidirectionnelle.
-			if (comptages.get(i).getIndic() == 1)
-			{
-				creerArc(idNoeud, idCentral, "");
-			}
-		}
 	}
 	
 	/**
@@ -87,7 +57,7 @@ public class Graphe extends SingleGraph {
 	 * 
 	 * @return l'identifiant du noeud créé.
 	 */
-	private String creerNoeud(Comptage comptage)
+	public String creerNoeud(Comptage comptage)
 	{
 		String id = comptage.getId();
 		String texte = comptage.getRubriqueSolde();
@@ -131,9 +101,9 @@ public class Graphe extends SingleGraph {
 	 * @param idNoeudCible l'identifiant du noeud cible.
 	 * @param texte le texte associé à l'arc.
 	 */
-	private void creerArc(String idNoeudSource, String idNoeudCible, String texte)
+	public void creerArc(String idNoeudSource, String idNoeudCible, String texte)
 	{
-		Edge arc = addEdge(idNoeudSource + "->" + idNoeudCible, idNoeudCible, idNoeudSource, true);
+		Edge arc = addEdge(idNoeudSource + "->" + idNoeudCible, idNoeudSource, idNoeudCible, true);
 		
 		arc.setAttribute("ui.label", texte);
 	}
@@ -160,14 +130,14 @@ public class Graphe extends SingleGraph {
 			// Calcul des positions des noeuds (en Unité Graphiques (GU)).
 			Toolkit.computeLayout(this, layout, 0.9);
 		}
-		
+				
 		BorderPane root = (BorderPane) sceneParent.getRoot();
 		
 		if (root.getChildren().contains(vue))
 		{
 			root.getChildren().remove(vue);
 		}
-		
+				
 		((BorderPane) sceneParent.getRoot()).getChildren().add(vue);
 		
 		coordonnees.clear();

@@ -50,26 +50,43 @@ public class AppControleur {
 		comptagesBDD = FXCollections.observableArrayList();
 		comptagesBDD.addAll(listCompteurs);
 
+		
+		/*comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,0));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","AVAE","YYYY",2,0,0,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","AVAE","AAAA",2,0,0,0));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","PPPP","AAAA",2,0,0,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","PPPP","YYYY",2,0,0,0));*/
+		
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,1));
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","TAOPCO",37,2,0,0));
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,0));
+		//comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
+		
 
-/*
-		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","FORMAT",2,0,0,0));
+		/*comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","FORMAT",2,0,0,0));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","YYYY",2,0,0,1));
 		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","AAAA",2,0,0,1));
+		
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,0));
+		
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,1));
+		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
+		
+		
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","FORMAT",4,0,0,0));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","YYYY",4,0,0,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","AAAA",4,0,0,1));
-		comptagesBDD.add(new Comptage("07.14.01.a.r01","TAOPC","TAOPCO",13,3,3,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TAOPC","TAOPCO",14,0,0,1));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TAOPC","TAOPCO",38,0,3,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","FORMAT",30,2,10,1));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","FORM","RECRUT",37,2,0,0));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","RECRUT",37,2,0,0));
-		comptagesBDD.add(new Comptage("07.20.01.a.r01","TEST","AZER",37,2,11,1));
+		
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","FORMAT",30,2,10,1));
 		comptagesBDD.add(new Comptage("07.19.00.c.r01","FORM","RECRUT",37,2,0,0));
-		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,0));
-		*/
+		
+		comptagesBDD.add(new Comptage("07.19.00.c.r01","TEST","RECRUT",37,2,0,1));*/
 	}
 
 	@FXML
@@ -147,7 +164,7 @@ public class AppControleur {
 		// Génération du graphe de la version de référence.
 		grapheVersionReference = new Graphe();
 		Comptage rsCentraleReference = recupererComptageCentral(selectionVersionReference);
-		construireGraphique(rsCentraleReference, grapheVersionReference);
+		construireGraphique(rsCentraleReference, rsCentraleReference.getMedro(), grapheVersionReference);
 
 		// Affichage du graphe de référence par défaut.
 		grapheVersionReference.afficher(selectionRS.getScene());
@@ -158,7 +175,7 @@ public class AppControleur {
 		// La comparaison est ainsi plus facile à faire.
 		grapheVersionAnalysee = new Graphe(grapheVersionReference.recupererCoordonneesNoeuds());
 		Comptage rsCentraleAnalysee = recupererComptageCentral(selectionVersionAnalysee);
-		construireGraphique(rsCentraleAnalysee, grapheVersionAnalysee);
+		construireGraphique(rsCentraleAnalysee, rsCentraleAnalysee.getMedro(), grapheVersionAnalysee);
 
 		// Création du graphe selon la version choisie.
 		boutonSelectionVersion.getSwitchedOnProperty().addListener((ov, ancienneValeur, nouvelleValeur) -> {
@@ -180,11 +197,11 @@ public class AppControleur {
 	 *
 	 * @param rsCentrale la rubrique de solde centrale.
 	 */
-	public void construireGraphique(Comptage rsCentrale, Graphe graphe)
+	public void construireGraphique(Comptage rsCentrale, String medro, Graphe graphe)
 	{
 		// La liste des rubriques de solde associée à la rubrique centrale.
-		List <Comptage> comptagesSelonVersion = OutilsComptage.recupererRubriqueSolde(rsCentrale, comptagesBDD);
-
+		List <Comptage> comptagesSelonVersion = OutilsComptage.recupererRubriqueSolde(rsCentrale, medro, comptagesBDD);
+		
 		int totalCompteurTotal = 0;
 
 		for (Comptage comptage : comptagesSelonVersion)
@@ -192,18 +209,39 @@ public class AppControleur {
 			totalCompteurTotal += comptage.getCompteurTot();
 		}
 
-		graphe.construire(rsCentrale, comptagesSelonVersion, totalCompteurTotal);
-
+		String idRSCentrale = graphe.creerNoeud(rsCentrale);
+		
 		// Récupération des rubriques de soldes associées aux rubriques filles.
 		for (Comptage comptage : comptagesSelonVersion)
 		{
-			if (comptage.getIndic() == 0)
+			String idRS = graphe.creerNoeud(comptage);
+			
+			// Identification des arcs déjà présents dans le graphe.
+			// Cela permet d'éviter les boucles infinies.
+			if (graphe.getEdge(idRS + "->" + idRSCentrale) == null)
 			{
-				List <Comptage> medros = OutilsComptage.recupererMedros(comptage, comptagesBDD);
-
-				for (Comptage medro : medros)
+				// Ajout de la proportion de présence de la rubrique de solde.
+				float pourcentage = 100.0f * comptage.getCompteurTot() / totalCompteurTotal;
+				
+				graphe.creerArc(idRS, idRSCentrale, String.format("%.1f", pourcentage) + "%");
+				
+				// Les rubriques de solde s'impacte l'une et l'autre.
+				// Création d'une flèche bidirectionnelle.
+				if (comptage.getIndic() == 1)
 				{
-					construireGraphique(medro, graphe);
+					graphe.creerArc(idRSCentrale, idRS, "");
+				}
+				
+				if (comptage.getIndic() == 0)
+				{
+					List <Comptage> medros = OutilsComptage.recupererMedros(comptage, comptagesBDD);
+
+					// TODO : si tous indicateurs à 0 alors afficher bulle données manquantes.
+					
+					for (Comptage m : medros)
+					{
+						construireGraphique(comptage, m.getMedro(), graphe);
+					}
 				}
 			}
 		}
