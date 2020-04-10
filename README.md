@@ -8,7 +8,7 @@ Visualisation en JAVA FX pour les rubriques de solde
 2. créer un fichier config.properties
 3. Copier/coller ce qui suit dedans :
 
-################ configuration d'accès à la SGBD ################
+----------------- configuration d'accès à la SGBD -----------------
 sgbdr.driver=com.oracle.jdbc.Driver
 sgbdr.ip=
 sgbdr.user=
