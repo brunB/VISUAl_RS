@@ -1,0 +1,53 @@
+/**
+ *
+ */
+package rs.smsif.compteur.dao;
+
+import java.sql.Connection;
+import java.util.List;
+
+import rs.smsif.compteur.model.Comptage;
+import rs.smsif.compteur.model.ParamRs;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamDAO extends DAO<ParamRs> {
+
+	public ParamDAO(Connection conn) {
+		super(conn);
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public int create(ParamRs obj) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int delete(ParamRs obj) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public boolean update(ParamRs obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ParamRs find(String a1, String a2, String a3) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ParamRs> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

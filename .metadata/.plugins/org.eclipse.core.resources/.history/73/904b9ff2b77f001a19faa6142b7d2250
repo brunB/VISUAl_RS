@@ -1,0 +1,16 @@
+/**
+ *
+ */
+package rs.smsif.compteur.utils;
+
+/**
+ *
+ * Classe qui permet de faire des traitement sur les données en provenancede la
+ * DAO
+ *
+ * @author neo
+ *
+ */
+public class OutilsDao {
+
+}

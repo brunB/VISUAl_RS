@@ -1,0 +1,291 @@
+/**
+ *
+ */
+package rs.smsif.compteur.dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import rs.smsif.compteur.model.ParamRs;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamDAO extends DAO<ParamRs> {
+
+	private List<ParamRs> listParams = new ArrayList<>();
+
+	public ParamDAO(Connection conn) {
+		super(conn);
+	}
+
+	/**
+	 *
+	 */
+	@Override
+	public int create(ParamRs obj) {
+		int result = 0;
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "INSERT INTO DX.COMPTEURS_PARAM ";
+			query += " (VERSION,MEDRO,PARAM_RS,CPT_TOT,CPT_BAR,CPT_BARN,CPT_EVO) values";
+			query += " (?,?,?,?,?,?,?)";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+
+			// Attibution des valeurs de la requête
+			prepare.setString(1, obj.getVersion());
+			prepare.setString(2, obj.getMedro());
+			prepare.setString(3, obj.getParamRs());
+			prepare.setInt(4, obj.getCompteurTot());
+			prepare.setInt(5, obj.getCompteurBar());
+			prepare.setInt(6, obj.getCompteurBar());
+			prepare.setInt(7, obj.getCompteurBarN());
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			result = prepare.executeUpdate();
+
+			// On récupère l'objet et ses valeurs
+			if (result > 0) {
+				System.out.println("Objet bien ajouté en base");
+			} else if (result == 0) {
+				System.out.println("Objet non injecté en base");
+			}
+			// Fermeture de la connexion
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int delete(ParamRs obj) {
+		int result = 0;
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "DELETE FROM DX.COMPTEURS_RS ";
+			query += " WHERE version = ?";
+			query += " and medro = ?";
+			query += " and RS = ?";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_UPDATABLE);
+
+			// Attibution des valeurs de la requête
+			prepare.setString(1, obj.getVersion());
+			prepare.setString(2, obj.getMedro());
+			prepare.setString(3, obj.getParamRs());
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			result = prepare.executeUpdate();
+
+			// On récupère l'objet et ses valeurs
+			if (result > 0) {
+				System.out.println("La ligne a bien été supprimée.");
+			} else if (result == 0) {
+				System.out.println("Aucune ligne n'a pas été supprimée.");
+			}
+			// Fermeture de la connexion
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public boolean update(ParamRs obj) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ParamRs find(String version, String medro, String paramRs) {
+		ParamRs param = new ParamRs();
+		int nombreLignes = 0;
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "SELECT * FROM DX.COMPTEURS_PARAM ";
+			query += " WHERE version = ?";
+			query += " and medro = ?";
+			query += " and PARAM_RS = ?";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			// Attibution des valeurs de la requête
+			prepare.setString(1, version);
+			prepare.setString(2, medro);
+			prepare.setString(3, paramRs);
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			ResultSet result = prepare.executeQuery();
+
+			// On se positionne sur la dernière ligne ramenée
+			result.last();
+
+			// récupération du n° de la ligne
+			nombreLignes = result.getRow();
+
+			// On récupère l'objet et ses valeurs
+			if (result.first() && nombreLignes == 1)
+				param = new ParamRs(version, medro, paramRs, result.getInt("CPT_TOT"), result.getInt("CPT_BAR"),
+						result.getInt("CPT_BARN"), result.getInt("CPT_EVO"));
+			// Fermeture de la connexion
+			result.close();
+		} catch (SQLException e) {
+			if (nombreLignes != 1) {
+				System.out.println("Le nombre de ligne ramenée n'est pas égale à 1 mais à " + nombreLignes);
+			}
+			e.printStackTrace();
+		}
+		return param;
+	}
+
+	/**
+	 * Méthode permettant d'obtenir l'ensemble des éléments de la table
+	 * DX.COMPTEURS_PARAM
+	 *
+	 * @return List<Comptage> retourne une liste d'objet de type Comptage
+	 */
+	@Override
+	public List<ParamRs> selectAll() {
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "SELECT * FROM DX.COMPTEURS_PARAM order by version,MEDRO,PARAM_RS";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			ResultSet result = prepare.executeQuery();
+
+			// Création d'un objet VersionLvs puis ajout dans la liste
+			if (result.first()) {
+				ParamRs paramInit = new ParamRs();
+				paramInit.setVersion(result.getString("VERSION"));
+				paramInit.setParamRs(result.getString("PARAM_RS"));
+				paramInit.setMedro(result.getString("MEDRO"));
+				paramInit.setCompteurBarN(result.getInt("CPT_BARN"));
+				paramInit.setCompteurTot(result.getInt("CPT_TOT"));
+				paramInit.setCompteurEvo(result.getInt("CPT_EVO"));
+				paramInit.setCompteurBar(result.getInt("CPT_BAR"));
+
+				listParams.add(paramInit);
+
+				while (result.next()) {
+					ParamRs param = new ParamRs();
+					param.setVersion(result.getString("VERSION"));
+					param.setParamRs(result.getString("PARAM_RS"));
+					param.setMedro(result.getString("MEDRO"));
+					param.setCompteurBarN(result.getInt("CPT_BARN"));
+					param.setCompteurTot(result.getInt("CPT_TOT"));
+					param.setCompteurEvo(result.getInt("CPT_EVO"));
+					param.setCompteurBar(result.getInt("CPT_BAR"));
+
+					listParams.add(param);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listParams;
+	}
+
+	/**
+	 * méthode qui retourne l'ensemble des paramètres de solde qui sont
+	 * visualisables depuis l'application
+	 *
+	 * @return la liste des Paramètres
+	 */
+	public List<String> dictionnaireParam() {
+		List<String> listParams = new ArrayList<String>();
+
+		try {
+
+			// Création de la requête sur la PK de DX.COMPTAGE_RS
+			String query = "SELECT DISTINCT PARAM_RS FROM DX.COMPTEURS_PARAM ORDER BY PARAM_RS";
+
+			/*
+			 * Création de l'objet preparedStatement TYPE_SCROLL_INSENSITIVE
+			 * scroll de la table avant et arriere par contre pas de
+			 * modification si BDD mise à jour, CONCUR_READ_ONLY : données
+			 * consultables uniquement en lecture
+			 */
+			PreparedStatement prepare = connect.prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
+
+			// Check requête prepare
+			System.out.println(prepare.toString());
+
+			// Execution de la requete SQL prepare
+			ResultSet result = prepare.executeQuery();
+
+			// Création d'un objet VersionLvs puis ajout dans la liste
+			if (result.first()) {
+				String rsInit = "";
+				rsInit = result.getString("PARAM_RS");
+				listParams.add(rsInit);
+
+				while (result.next()) {
+					String rs = "";
+					rs = result.getString("PARAM_RS");
+					listParams.add(rs);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return listParams;
+
+	}
+
+}

@@ -1,0 +1,20 @@
+/**
+ *
+ */
+package rs.smsif.compteur.model;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamRs {
+
+	private String version;
+	private String medro;
+	private String paramRs;
+	private int compteurTot;
+	private int compteurBar;
+	private int compteurBarN;
+	private int compteurEvo;
+
+}

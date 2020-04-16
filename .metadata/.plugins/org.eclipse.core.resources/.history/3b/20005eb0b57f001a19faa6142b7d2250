@@ -1,0 +1,15 @@
+/**
+ *
+ */
+package rs.smsif.compteur.dao;
+
+import rs.smsif.compteur.model.Comptage;
+import rs.smsif.compteur.model.ParamRs;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamDAO extends DAO<ParamRs> {
+
+}

@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package rs.smsif.compteur.model;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamRs {
+
+}

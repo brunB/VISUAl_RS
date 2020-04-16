@@ -1,0 +1,40 @@
+package rs.smsif.compteur.model;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import rs.smsif.compteur.dao.ComptageDAO;
+import rs.smsif.compteur.dao.DAO;
+import rs.smsif.compteur.dao.VisualrsConnexion;
+import rs.smsif.compteur.utils.Loader;
+
+public class Main extends Application {
+
+	public static void main(String[] args) {
+		/**
+		 * TESTS DAO ParamDAO
+		 */
+		Connection connexion = VisualrsConnexion.getInstance();
+		DAO<Comptage> cptDao = new ComptageDAO(connexion);
+		List<Comptage> listCompteurs = cptDao.selectAll();
+
+
+		System.setProperty("gs.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+
+		launch(args);
+		System.exit(0);
+	}
+
+	@Override
+	public void start(Stage stage) {
+		try {
+			Loader.charger("/rs/smsif/compteur/view/App.fxml", "VisualRS");
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+}
