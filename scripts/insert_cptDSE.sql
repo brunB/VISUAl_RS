@@ -4,6 +4,9 @@
 --------------------------------------------------------
 --  DDL for Table COMPTEURS_RS
 --------------------------------------------------------
+-- Tablesapce 
+CREATE TABLESPACE TBS_COMPTEURS_RS datafile 'D:\app\neo\oradata\VISUALRS\tbs_compteur_rs.dbf' size 80M AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED EXTENT MANAGEMENT LOCAL AUTOALLOCATE SEGMENT SPACE MANAGEMENT AUTO;
+CREATE TABLESPACE TBS_INDEX_COMPTEURS_RS datafile 'D:\app\neo\oradata\VISUALRS\tbs_index_compteur_rs.dbf' size 80M AUTOEXTEND ON NEXT 10M MAXSIZE UNLIMITED EXTENT MANAGEMENT LOCAL AUTOALLOCATE SEGMENT SPACE MANAGEMENT AUTO;
 
   CREATE TABLE "DX"."COMPTEURS_RS" 
    (	"VERSION" VARCHAR2(15 CHAR), 
