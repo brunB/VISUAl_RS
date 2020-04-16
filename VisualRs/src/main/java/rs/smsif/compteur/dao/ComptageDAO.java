@@ -16,7 +16,7 @@ import rs.smsif.compteur.model.Comptage;
  *
  * Classe permettant le mapping entre les objets java et les objets en BDD
  *
- * @author neo
+ * @author Brun
  *
  */
 public class ComptageDAO extends DAO<Comptage> {
@@ -130,6 +130,7 @@ public class ComptageDAO extends DAO<Comptage> {
 	 * Méthode pour mettre à jour une donnée dans la BDD de type Comptage
 	 */
 	public boolean update(Comptage obj) {
+
 		return false;
 	}
 
@@ -147,7 +148,7 @@ public class ComptageDAO extends DAO<Comptage> {
 	 *
 	 */
 	public Comptage find(String version, String medro, String rubriqueSolde) {
-		Comptage Comptage = new Comptage();
+		Comptage comptage = new Comptage();
 		int nombreLignes = 0;
 		try {
 
@@ -185,7 +186,7 @@ public class ComptageDAO extends DAO<Comptage> {
 
 			// On récupère l'objet et ses valeurs
 			if (result.first() && nombreLignes == 1)
-				Comptage = new Comptage(version, medro, rubriqueSolde, result.getInt("CPT_TOT"),
+				comptage = new Comptage(version, medro, rubriqueSolde, result.getInt("CPT_TOT"),
 						result.getInt("CPT_BAR"), result.getInt("CPT_EVO"), result.getInt("INDIC"));
 			// Fermeture de la connexion
 			result.close();
@@ -195,7 +196,7 @@ public class ComptageDAO extends DAO<Comptage> {
 			}
 			e.printStackTrace();
 		}
-		return Comptage;
+		return comptage;
 	}
 
 	/**
@@ -262,7 +263,7 @@ public class ComptageDAO extends DAO<Comptage> {
 	}
 
 	/**
-	 * méthode qui retourne l'ensemble des des rubriques de solde qui sont
+	 * méthode qui retourne l'ensemble des rubriques de solde qui sont
 	 * visualisables depuis l'application
 	 *
 	 * @return la liste des rubriques de solde

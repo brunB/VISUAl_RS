@@ -45,7 +45,11 @@ public class Comptage {
 		this.indic = indic;
 	}
 
+	/**
+	 * Constructeur vide par défaut
+	 */
 	public Comptage() {
+		super();
 	};
 
 	public String getVersion() {
