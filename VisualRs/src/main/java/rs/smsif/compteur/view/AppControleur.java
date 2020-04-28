@@ -266,7 +266,7 @@ public class AppControleur {
 				break;
 			}
 		}
-		
+
 		if (rsCentrale == null)
 		{
 			texteInformationSelectionVersion.setText("Aucun DSE n'existe pour la rubrique de solde "
