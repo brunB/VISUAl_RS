@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package rs.smsif.compteur.dao;
+
+/**
+ * @author neo
+ *
+ */
+public class ParamDAO {
+
+}

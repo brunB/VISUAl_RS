@@ -201,21 +201,18 @@ public class AppControleur {
 				else if (comptage.getIndic() == 0)
 				{
 					List <Comptage> toutesMedrosRS = OutilsComptage.recupererMedros(comptage, comptagesBDD);
-					
+
 					// Si la liste est vide, cela signifie que tous les indicateurs sont à 0.
 					// Ajout d'une bulle pour informer de données manquantes.
-					/*if (medros.isEmpty())
+					if (toutesMedrosRS.isEmpty())
 					{
 						graphe.creerNoeudDonneesManquantes(idRS);
 					}
 					
-					else
-					{*/
-						for (Comptage medroRS : toutesMedrosRS)
-						{
-							construireGraphique(comptage, medroRS.getMedro(), graphe);
-						}
-					//}
+					for (Comptage medroRS : toutesMedrosRS)
+					{
+						construireGraphique(comptage, medroRS.getMedro(), graphe);
+					}
 				}
 			}
 		}

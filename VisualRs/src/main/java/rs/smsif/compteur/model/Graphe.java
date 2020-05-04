@@ -70,14 +70,14 @@ public class Graphe extends SingleGraph {
 		if (noeud == null)
 		{
 			noeud = addNode(id);				
-			noeud.setAttribute("ui.label", texte);
+			noeud.setAttribute("ui.label", id);
 		}
 		
 		// Si le noeud existe dans le graphe de référence,
 		// la position du nouveau noeud doit être identique.
 		if (coordonnees.containsKey(texte))
 		{
-			noeud.setAttribute("xy", coordonnees.get(texte)[0], coordonnees.get(texte)[1]);
+			noeud.setAttribute("xy", coordonnees.get(id)[0], coordonnees.get(id)[1]);
 			noeud.setAttribute("layout.frozen");
 		}
 		
@@ -110,17 +110,21 @@ public class Graphe extends SingleGraph {
 	
 	public void creerNoeudDonneesManquantes(String idNoeudSource)
 	{
-		String idNoeud = "donneesmanquantes";
+		String idNoeud = "donneesmanquantes-" + idNoeudSource;
 		
 		Node noeud = getNode(idNoeud);
-		
+
 		if (noeud == null)
 		{
 			noeud = addNode(idNoeud);
-			noeud.setAttribute("ui.class", "donneesmanquantes");
 		}
-				
-		addEdge(idNoeudSource + "->" + idNoeud, idNoeudSource, idNoeud, false);
+		
+		noeud.setAttribute("ui.class", "donneesmanquantes");
+		
+		if (getEdge(idNoeudSource + "->" + idNoeud) == null)
+		{
+			addEdge(idNoeudSource + "->" + idNoeud, idNoeudSource, idNoeud, false);
+		}	
 	}
 	
 	/**
@@ -163,8 +167,8 @@ public class Graphe extends SingleGraph {
 		coordonnees.clear();
 
 		nodes().forEach(node -> {
-			
-			coordonnees.put(node.getAttribute("ui.label").toString(), Toolkit.nodePosition(node));
+						
+			coordonnees.put(node.getId(), Toolkit.nodePosition(node));
 		});
 	}
 	
